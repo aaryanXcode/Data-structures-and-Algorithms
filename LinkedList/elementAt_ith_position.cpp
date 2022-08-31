@@ -1,0 +1,72 @@
+#include<iostream>
+using namespace std;
+class Node{
+public:
+    int data;
+    Node *next;
+    Node(int data)
+    {
+        this->data=data;
+        this->next=NULL;
+    }
+
+};
+Node *createNode()
+{
+    int data;
+    cin>>data;
+    Node *head=NULL;
+    Node *tail=NULL;
+    while(data!=-1)
+    {
+        Node *newNode=new Node(data);
+        if(head==NULL)
+        {
+            head=newNode;
+            tail=newNode;
+        }
+        else
+        {
+            tail->next=newNode;
+            tail=tail->next;
+        }
+        cin>>data;
+    }
+    return head;
+}
+int print(Node *head)
+{
+
+    while(head!=NULL)
+    {
+        cout<<head->data<<"->";
+        head=head->next;
+    }
+    cout<<"NULL\n";
+}
+int i_position(Node *head,int n )
+{
+    int count=0;
+    while(head!=NULL)
+    {
+        if(n==head->data)
+        {
+            return count;
+        }
+        else{
+            head=head->next;
+            count++;
+
+        }
+    }
+}
+int main()
+{
+    int element;
+    Node *head=createNode();
+    print(head);
+    cout<<"enter data to be found in linked list:";
+    cin>>element;
+    int pos=i_position(head,element);
+    cout<<"element at this:"<<pos<<"\n";
+}

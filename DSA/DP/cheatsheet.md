@@ -30,6 +30,7 @@ Instead of re-solving the same subproblems:
 
 
 
+
 1. **Memoization (Top-down)** → Store the result of each subproblem when first computed, reuse later.(recursion + store)
 2. **Tabulation (Bottom-up)** → Solve subproblems in a smart order and store results in a table/array.
 
@@ -73,6 +74,7 @@ Imagine cooking for 50 guests:
 Main DP Patterns
 
 Here’s a structured list (in increasing complexity):
+
 
 
 
@@ -311,3 +313,71 @@ Examples: Dice throws, Random walks
 State: dp\[state\] = expected value/prob
 Transition: Weighted sum of next states
 Order: Depends on dependency graph
+
+
+## **one more pattern for unbounded recursion(like we can choose infite time of a element form the choices)**
+
+```javascript
+#include <bits/stdc++.h>
+using namespace std;
+
+int n; // number of elements/items
+vector<vector<int>> dp; // memoization table
+
+// Core unbounded recursion pattern
+// Parameters:
+// index: current element/item
+// currValue: current sum / capacity / accumulated value
+int unboundedRecursion(vector<int>& arr, int target, int index, int currValue) {
+    // Base cases
+    if(currValue > target) return INT_MAX;  // boundary exceeded
+    if(currValue == target) return 0;       // solution found
+    if(index == n) return INT_MAX;          // no more elements to consider
+
+    // Memoization check
+    if(dp[index][currValue] != -1) return dp[index][currValue];
+
+    // 1️⃣ Take current element (unbounded: index stays the same)
+    int take = unboundedRecursion(arr, target, index, currValue + arr[index]);
+    if(take != INT_MAX) take += 1; // include this element in count/solution
+
+    // 2️⃣ Skip current element (move to next index)
+    int skip = unboundedRecursion(arr, target, index + 1, currValue);
+
+    // Store and return minimum / maximum based on problem
+    return dp[index][currValue] = min(take, skip); // can replace min with max if needed
+}
+
+int main() {
+    vector<int> arr = {1, 2, 5}; // example: coins, rod lengths, steps
+    int target = 11;             // example: amount, total length, goal
+
+    n = arr.size();
+    dp.assign(n + 1, vector<int>(target + 1, -1));
+
+    int result = unboundedRecursion(arr, target, 0, 0);
+
+    if(result == INT_MAX) cout << -1 << endl;
+    else cout << result << endl;
+
+    return 0;
+}
+```
+
+### **Examples of this pattern**
+
+This recursion is **essentially a general pattern** for problems where:
+
+* You can pick elements unlimited times
+* There’s a boundary (like amount, capacity, length)
+* You want min / max / count over all valid combinations
+
+
+
+
+1. **Coin Change (minimum coins)** → exactly what you’re doing.
+2. **Unbounded Knapsack (max value with repeated items)**
+3. **Climbing stairs / jump games** → if you can take multiple steps of the same size repeatedly.
+4. **Rod cutting problem** → take a rod of length `i` multiple times to maximize profit.
+
+

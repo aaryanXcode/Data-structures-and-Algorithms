@@ -18,7 +18,7 @@ int longestSub(vector<int>& nums){
             }
 
         }
-        maxCount = max(maxCount, end-start+1);
+        maxCount = max(maxCount, end-start);
     }
     cout<<maxCount<<endl;
     return maxCount;

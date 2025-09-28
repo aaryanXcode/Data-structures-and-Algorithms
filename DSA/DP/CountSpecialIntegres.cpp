@@ -1,37 +1,41 @@
 #include <bits/stdc++.h>
 using namespace std;
-
-string canonical(int x) {
-    string s = to_string(x);
-    sort(s.begin(), s.end());  // canonical = sorted digits
-    return s;
+void printDigit(vector<int>& digits){
+    for(int n: digits){
+        cout<<n<<",";
+    }
+    cout<<endl;
 }
-
+int digitDp(int pos, int tight, int started, vector<int>& digits,vector<bool>& used){
+    if(pos==digits.size()) return 1;
+    int limit = tight?digits[pos]:9;
+    int res = 0;
+    for(int j = 0; j<=limit; j++){
+        int newTight = tight && (j == limit);
+        if (!started && j == 0) {
+            res += digitDp(pos + 1, newTight, 0, digits, used);
+        } else {
+            if(used[j]) continue; 
+            used[j] = true;
+            res += digitDp(pos+1, newTight, 1, digits, used);
+            used[j] = false;
+        }
+    }
+    return res;
+}
+int countSpecialNumbers(int n) {
+    vector<bool> used(10,false);
+    vector<int> digits;
+    while(n > 0) {
+        digits.push_back(n % 10);
+        n /= 10;
+    }
+    printDigit(digits);
+    reverse(digits.begin(), digits.end());
+    return digitDp(0, 1, 0, digits, used)-1;
+}
 int main() {
-    unordered_map<string, int> seen;
-    vector<string> order;  // to preserve discovery order
-
-    for (int i = 1; i <= 9999; ++i) {
-        string key = canonical(i);
-        if (!seen.count(key)) {
-            seen[key] = 1;        // mark as seen
-            order.push_back(key); // store for printing later
-        }
-    }
-
-    cout << "Unique groups: " << seen.size() << "\n\n";
-    cout << "Digit multisets:\n";
-
-    // Print them grouped by length
-    for (int len = 1; len <= 4; ++len) {
-        cout << "--- " << len << "-digit multisets ---\n";
-        for (auto &key : order) {
-            if ((int)key.size() == len) {
-                cout << key << " ";
-            }
-        }
-        cout << "\n\n";
-    }
-
+    int n = 9999;
+    cout<<countSpecialNumbers(n)<<endl;
     return 0;
 }

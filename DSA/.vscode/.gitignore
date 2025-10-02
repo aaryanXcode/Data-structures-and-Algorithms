@@ -1,0 +1,35 @@
+# Ignore object files
+*.o
+*.obj
+
+# Ignore compiled dynamic libraries
+*.so
+*.dll
+*.dylib
+
+# Ignore compiled static libraries
+*.a
+*.lib
+
+# Ignore compiled executables
+*.exe
+*.out
+*.app
+
+# Ignore debug and build directories
+/build/
+/bin/
+/debug/
+/release/
+/dist/
+
+/CMakeFiles/
+/CMakeCache.txt
+Makefile
+cmake_install.cmake
+
+# Ignore logs and temporary files
+*.log
+*.tmp
+*.swp
+*.DS_Store

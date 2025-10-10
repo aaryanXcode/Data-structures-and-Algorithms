@@ -289,6 +289,8 @@ int dfs(int x, int y) {
             if (subAns != INT_MAX) { // path exists
                 ans = min(ans, subAns + 1); // +1 for steps
                 // for cost: ans = min(ans, subAns + grid[nx][ny]);
+            } grid[newX][newY] = '0';  // mark as visited
+            } grid[newX][newY] = '0';  // mark as visited
             }
         }
     }

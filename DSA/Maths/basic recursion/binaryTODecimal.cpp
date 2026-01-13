@@ -30,7 +30,8 @@ int binaryLoop(int n) {
     return result;
 }
 
+
 int main() {
     int n = 13;
-    cout << binaryStr(n) << endl; // Output: 1101
+    cout << binaryLoop(n) << endl; // Output: 1101
 }

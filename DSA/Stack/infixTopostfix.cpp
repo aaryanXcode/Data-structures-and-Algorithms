@@ -15,7 +15,7 @@ string postfixex(string& infix){
     string output = "";
     for(int i =0;i<infix.size();i++){
         char c = infix[i];
-        if((c >= 65 && c<= 90) || (c>=97 && c<=122)){
+        if((c >= 65 && c<= 90) || (c>=97 && c<=122) || (c>=48 && c<=57)){
             output += c;
         }else if(c=='('){
             st.push(c);

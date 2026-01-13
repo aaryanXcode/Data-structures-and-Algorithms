@@ -11,6 +11,7 @@ bool searchMatrix(vector<vector<int>>& matrix, int target) {
             int mid = low+(high-low)/2;
             int row = mid / m;
             int col = mid % m;
+            cout<<"row:"<<row<<" "<<"col:"<<col<<endl;
             if(matrix[row][col]==target){
                 return true;
             }else if(matrix[row][col]<target){
